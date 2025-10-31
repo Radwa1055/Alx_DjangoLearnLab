@@ -1,19 +1,7 @@
-### Update the Book title using get() then save()
-
-from bookshelf.models import Book
-
-# Get the existing book using get()
-book = Book.objects.get(title="1984")
-
-# Update the title
-book.title = "Nineteen Eighty-Four"
+# Test 3: Update the book
+book.title = "Updated Book"
 book.save()
+updated = Book.objects.get(id=book.id)
+assert updated.title == "Updated Book", "Book was not updated"
+print("✓ Update test passed")
 
-# Verify the update using get() again
-updated = Book.objects.get(pk=book.pk)
-updated.title
-# "Nineteen Eighty-Four"
-
-# Or show all objects
-Book.objects.all()
-# <QuerySet [<Book: Nineteen Eighty-Four>]>

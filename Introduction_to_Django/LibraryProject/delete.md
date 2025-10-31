@@ -1,13 +1,5 @@
-### Delete the Book instance using get() then delete()
-
-from bookshelf.models import Book
-
-# Get the book using get()
-book = Book.objects.get(title="Nineteen Eighty-Four")
-
-# Delete it
 book.delete()
+assert Book.objects.filter(id=book.id).count() == 0, "Book was not deleted"
+print("✓ Delete test passed")
 
-# Verify deletion: list all books
-Book.objects.all()
-# <QuerySet []>
+print("\n✓ All tests passed!")
