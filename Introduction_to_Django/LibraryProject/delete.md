@@ -1,5 +1,14 @@
-book.delete()
-assert Book.objects.filter(id=book.id).count() == 0, "Book was not deleted"
-print("✓ Delete test passed")
+markdown# Delete Operation
 
-print("\n✓ All tests passed!")
+## Python Command
+```python
+from bookshelf.models import Book
+book = Book.objects.get(title="Nineteen Eighty-Four")
+book.delete()
+Book.objects.all()
+```
+
+## Output
+(1, {'bookshelf.Book': 1})
+<QuerySet []>
+

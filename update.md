@@ -1,7 +1,11 @@
-# Test 3: Update the book
-book.title = "Updated Book"
-book.save()
-updated = Book.objects.get(id=book.id)
-assert updated.title == "Updated Book", "Book was not updated"
-print("✓ Update test passed")
+# Update Operation
 
+## Python Command
+```python
+from bookshelf.models import Book
+book = Book.objects.get(title="1984")
+book.title = "Nineteen Eighty-Four"
+book.save()
+```
+
+## Output

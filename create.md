@@ -1,6 +1,11 @@
-from bookshelf.models import Book
+markdown# Create Operation
 
-# Test 1: Create a book
-book = Book.objects.create(title="Test Book", author="Test Author", publication_year=2024)
-assert book.id is not None, "Book was not created"
-print("✓ Create test passed")
+## Python Command
+```python
+from bookshelf.models import Book
+book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)
+```
+
+## Output
+<Book: 1984 by George Orwell (1949)>
+
