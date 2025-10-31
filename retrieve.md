@@ -1,3 +1,5 @@
+### Retrieve the created Book using get()
+
 from bookshelf.models import Book
 
 # Retrieve the book we created using get (by title)
@@ -11,6 +13,7 @@ book.author
 book.publication_year
 # 1949
 
-# Alternatively, show the object
+# Show the object
 book
 # <Book: 1984>
+

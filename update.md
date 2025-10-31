@@ -1,3 +1,5 @@
+### Update the Book title using get() then save()
+
 from bookshelf.models import Book
 
 # Get the existing book using get()
@@ -15,4 +17,3 @@ updated.title
 # Or show all objects
 Book.objects.all()
 # <QuerySet [<Book: Nineteen Eighty-Four>]>
-
