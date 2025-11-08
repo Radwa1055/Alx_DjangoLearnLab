@@ -1,15 +1,16 @@
-from django.http import HttpResponse
-from django.views.generic import DetailView
-from .models import Book, Library
+from django.shortcuts import render
+from .models import Book
 
-# Function-based view: عرض بسيط لأسماء الكتب والمؤلفين
 def list_books(request):
+    """Function-based view to list all books"""
     books = Book.objects.all()
-    output = "\n".join([f"{book.title} by {book.author.name}" for book in books])
-    return HttpResponse(output)
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# Class-based view: تفاصيل مكتبة معينة
+from django.views.generic import DetailView
+from .models import Library
+
 class LibraryDetailView(DetailView):
+    """Class-based view to display library details"""
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
