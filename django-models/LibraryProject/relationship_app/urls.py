@@ -35,9 +35,13 @@ urlpatterns += [
 ]
 
 
+from django.urls import path
+from . import views
+
 urlpatterns = [
     path('book/add/', views.add_book, name='add_book'),
     path('book/edit/<int:pk>/', views.edit_book, name='edit_book'),
     path('book/delete/<int:pk>/', views.delete_book, name='delete_book'),
 ]
+
 
