@@ -17,3 +17,35 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+
+# Registration view
+def register_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log in user immediately after registration
+            return redirect('list_books')  # Redirect to a page after registration
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
+
+
+# Login view using Django built-in LoginView
+class CustomLoginView(LoginView):
+    template_name = 'relationship_app/login.html'
+    authentication_form = AuthenticationForm
+    redirect_authenticated_user = True
+
+
+# Logout view using Django built-in LogoutView
+class CustomLogoutView(LogoutView):
+    template_name = 'relationship_app/logout.html'
