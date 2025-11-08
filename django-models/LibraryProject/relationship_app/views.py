@@ -2,14 +2,13 @@ from django.http import HttpResponse
 from django.views.generic import DetailView
 from .models import Book, Library
 
-
+# Function-based view: عرض بسيط لأسماء الكتب والمؤلفين
 def list_books(request):
     books = Book.objects.all()
-    
     output = "\n".join([f"{book.title} by {book.author.name}" for book in books])
-    return HttpResponse(output, content_type="text/plain")
+    return HttpResponse(output)
 
-
+# Class-based view: تفاصيل مكتبة معينة
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'library_detail.html'
