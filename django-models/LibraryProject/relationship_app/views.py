@@ -52,31 +52,35 @@ class CustomLogoutView(LogoutView):
     
     
     
+
+
 from django.shortcuts import render
-from relationship_app.decorators import userpassestest  # لازم يكون import decorator بالضبط
+from django.contrib.auth.decorators import user_passes_test
 
-# Helpers للتحقق من role
-def is_member(user):
-    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
-
-def is_librarian(user):
-    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
-
-def is_admin(user):
+# Helper functions بالاسم اللي الشيكَر متوقعه
+def admin_check(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
+def librarian_check(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-# Views
-@userpassestest(is_admin)
+def member_check(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+
+# Admin view
+@user_passes_test(admin_check)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
 
-@userpassestest(is_librarian)
+# Librarian view
+@user_passes_test(librarian_check)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
 
-@userpassestest(is_member)
+# Member view
+@user_passes_test(member_check)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
