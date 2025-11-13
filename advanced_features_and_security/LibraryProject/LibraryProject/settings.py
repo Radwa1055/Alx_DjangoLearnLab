@@ -141,6 +141,8 @@ CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
 CSP_SCRIPT_SRC = ("'self'",)
 
+# Tell Django the original request scheme when behind a proxy/load balancer
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Force all HTTP requests to redirect to HTTPS
@@ -166,3 +168,6 @@ SECURE_BROWSER_XSS_FILTER = True
 
  
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+proxy_set_header X-Forwarded-Proto $scheme;
+
