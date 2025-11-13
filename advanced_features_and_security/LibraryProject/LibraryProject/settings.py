@@ -127,3 +127,4 @@ LOGIN_URL = 'login'  # Redirect if not logged in
 LOGIN_REDIRECT_URL = 'list_books'  # Redirect after login
 LOGOUT_REDIRECT_URL = 'login'      # Redirect after logout
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
