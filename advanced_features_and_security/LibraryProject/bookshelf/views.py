@@ -17,4 +17,13 @@ def create_book(request):
     return render(request, 'bookshelf/create_book.html')
 
 
+
+
+
+books = Book.objects.filter(title__icontains=title)
+title = request.GET.get('title', '')
+if title.isalpha():
+    books = Book.objects.filter(title__icontains=title)
+
+
 # Create your views here.
