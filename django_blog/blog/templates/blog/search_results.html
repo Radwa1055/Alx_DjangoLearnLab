@@ -1,0 +1,6 @@
+<h2>Results for: "{{ query }}"</h2>
+{% for post in results %}
+    <p>{{ post.title }}</p>
+{% empty %}
+    <p>No results found.</p>
+{% endfor %}
