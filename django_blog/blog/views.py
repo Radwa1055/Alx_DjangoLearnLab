@@ -130,7 +130,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return self.object.post.get_absolute_url()  # يرجع لصفحة البوست بعد إضافة التعليق
 
-# تعديل التعليق (فقط للكاتب)
+
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
@@ -143,7 +143,7 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return self.object.post.get_absolute_url()
 
-# حذف التعليق (فقط للكاتب)
+# 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = 'comment_confirm_delete.html'
@@ -156,7 +156,7 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.object.post.get_absolute_url()
     
     
-    from django.db.models import Q
+from django.db.models import Q
 from django.shortcuts import render
 from .models import Post
 
@@ -172,8 +172,4 @@ def search_posts(request):
         ).distinct()
 
     return render(request, "blog/search_results.html", {"results": results, "query": query})
-
-
-
-
-
+   

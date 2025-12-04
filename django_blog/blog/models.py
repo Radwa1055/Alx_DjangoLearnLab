@@ -33,6 +33,7 @@ class Comment(models.Model):
     
     
 
+
 from django.db import models
 from taggit.managers import TaggableManager
 
@@ -45,3 +46,4 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
