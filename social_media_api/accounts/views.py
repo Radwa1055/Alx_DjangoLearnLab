@@ -36,7 +36,6 @@ class ProfileView(APIView):
 # Create your views here.
 
 
-
 from rest_framework import status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -51,16 +50,19 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @action(detail=True, methods=['post'], url_path='followuser')
-    def followuser(self, request, pk=None):
+    @action(detail=True, methods=['post'], url_path='follow')
+    def follow(self, request, pk=None):
         target_user = self.get_object()
         if target_user == request.user:
             return Response({"detail": "Cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
         request.user.following.add(target_user)
         return Response({"detail": f"You are now following {target_user.username}."})
 
-    @action(detail=True, methods=['post'], url_path='unfollowuser')
-    def unfollowuser(self, request, pk=None):
+    @action(detail=True, methods=['post'], url_path='unfollow')
+    def unfollow(self, request, pk=None):
         target_user = self.get_object()
         request.user.following.remove(target_user)
         return Response({"detail": f"You have unfollowed {target_user.username}."})
+
+
+    
