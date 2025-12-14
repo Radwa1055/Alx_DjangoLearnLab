@@ -36,33 +36,39 @@ class ProfileView(APIView):
 # Create your views here.
 
 
-from rest_framework import status, permissions
-from rest_framework.decorators import action
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-from django.contrib.auth import get_user_model
+from .models import CustomUser
 from .serializers import UserSerializer
 
-User = get_user_model()
-
-class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+class FollowUserView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @action(detail=True, methods=['post'], url_path='follow')
-    def follow(self, request, pk=None):
-        target_user = self.get_object()
+    def post(self, request, user_id):
+        try:
+            target_user = CustomUser.objects.get(id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
         if target_user == request.user:
             return Response({"detail": "Cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
+
         request.user.following.add(target_user)
-        return Response({"detail": f"You are now following {target_user.username}."})
+        return Response({"detail": f"You are now following {target_user.username}."}, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'], url_path='unfollow')
-    def unfollow(self, request, pk=None):
-        target_user = self.get_object()
+
+class UnfollowUserView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        try:
+            target_user = CustomUser.objects.get(id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
         request.user.following.remove(target_user)
-        return Response({"detail": f"You have unfollowed {target_user.username}."})
-
-
-    
+        return Response({"detail": f"You have unfollowed {target_user.username}."}, status=status.HTTP_200_OK)

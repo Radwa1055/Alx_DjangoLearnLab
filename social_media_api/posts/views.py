@@ -42,4 +42,5 @@ def feed(request):
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data)
 
+
   
