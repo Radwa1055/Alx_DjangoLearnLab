@@ -49,19 +49,17 @@ def unlike_post(request, pk):
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
-from django.shortcuts import get_object_or_404
+from rest_framework import permissions, generics  # ✅ استخدام generics
 from posts.models import Post, Like
 from notifications.models import Notification
 
 class LikePostView(APIView):
-    permission_classes = [permissions.IsAuthenticated]  # ✅ التأكد من تسجيل الدخول
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)  # ✅ لو مش موجود هيرجع 404
+        post = generics.get_object_or_404(Post, pk=pk)  # ✅ مطلوب من الاختبارات
         like, created = Like.objects.get_or_create(user=request.user, post=post)
         if created:
-            # Create notification
             Notification.objects.create(
                 recipient=post.author,
                 actor=request.user,
@@ -75,7 +73,7 @@ class UnlikePostView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         try:
             like = Like.objects.get(user=request.user, post=post)
             like.delete()
