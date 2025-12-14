@@ -46,17 +46,19 @@ def like_post(request, pk):
 def unlike_post(request, pk):
     Like.objects.filter(user=request.user, post_id=pk).delete()
     return Response({'detail': 'unliked'})
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
+from django.shortcuts import get_object_or_404
 from posts.models import Post, Like
 from notifications.models import Notification
 
 class LikePostView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]  # ✅ التأكد من تسجيل الدخول
 
     def post(self, request, pk):
-        post = Post.objects.get(pk=pk)
+        post = get_object_or_404(Post, pk=pk)  # ✅ لو مش موجود هيرجع 404
         like, created = Like.objects.get_or_create(user=request.user, post=post)
         if created:
             # Create notification
@@ -70,10 +72,10 @@ class LikePostView(APIView):
         return Response({'status': 'already liked'})
 
 class UnlikePostView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = Post.objects.get(pk=pk)
+        post = get_object_or_404(Post, pk=pk)
         try:
             like = Like.objects.get(user=request.user, post=post)
             like.delete()
