@@ -3,9 +3,6 @@ from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
-    """
-    
-    """
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
@@ -29,5 +26,3 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-
-# Create your views here.
