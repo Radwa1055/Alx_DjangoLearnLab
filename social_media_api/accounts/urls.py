@@ -1,27 +1,11 @@
 from django.urls import path
-from .views import RegisterView, LoginView, ProfileView
+from .views import register, login, follow_user, unfollow_user
 
 urlpatterns = [
-    path('register/', RegisterView.as_view()),
-    path('login/', LoginView.as_view()),
-    path('profile/', ProfileView.as_view()),
-    
+    path('register/', register),
+    path('login/', login),
+    path('follow/<int:user_id>/', follow_user),
+    path('unfollow/<int:user_id>/', unfollow_user),
 ]
-from rest_framework.routers import DefaultRouter
-from .views import UserViewSet
-from django.urls import path, include
 
-router = DefaultRouter()
-router.register(r'users', UserViewSet)
-
-urlpatterns = [
-    path('', include(router.urls)),
-]
-from django.urls import path
-from .views import FollowUserView, UnfollowUserView
-
-urlpatterns = [
-    path('follow/<int:user_id>/', FollowUserView.as_view(), name='follow'),
-    path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow'),
-]
 
