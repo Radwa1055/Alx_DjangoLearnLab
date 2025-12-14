@@ -175,7 +175,7 @@ def search_posts(request):
    
    
    
-   from django.views.generic import ListView
+from django.views.generic import ListView
 from .models import Post
 
 class PostByTagListView(ListView):

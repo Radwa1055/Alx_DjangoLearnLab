@@ -33,15 +33,14 @@ class CommentForm(forms.ModelForm):
 class SearchForm(forms.Form):
     q = forms.CharField(label='Search', max_length=100)
     
-        
-        from django import forms
+from django import forms
 from .models import Post
 from taggit.forms import TagWidget        
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'tags']
+        fields = ['title', 'content', 'contenttags']
         widgets = {
             'tags': TagWidget(),         # 
         }
