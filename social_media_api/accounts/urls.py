@@ -44,3 +44,5 @@ urlpatterns = [
     path('unfollow/<int:user_id>/', UnfollowUserView.as_view()),
 ]
 
+/follow/int:user_id/
+/unfollow/int:user_id/
