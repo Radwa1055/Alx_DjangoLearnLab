@@ -138,3 +138,24 @@ def unfollowuser(request, user_id):
     request.user.following.remove(user_to_unfollow)
     return Response({"message": "User unfollowed"})
 
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+from .models import User as CustomUser
+class FollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, user_id):
+        user_to_follow = get_object_or_404(CustomUser, id=user_id)
+        request.user.following.add(user_to_follow)
+        return Response({"message": "User followed"})
+class UnfollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, user_id):
+        user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
+        request.user.following.remove(user_to_unfollow)
+        return Response({"message": "User unfollowed"})
